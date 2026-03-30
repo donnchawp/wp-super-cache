@@ -1566,7 +1566,6 @@ function wp_cache_phase2() {
 		add_action( 'template_redirect', 'wp_super_cache_query_vars' );
 		add_filter( 'wp_redirect_status', 'wpsc_catch_http_status_code' );
 		add_filter( 'status_header', 'wpsc_catch_status_header', 10, 2 );
-		add_filter( 'supercache_filename_str', 'wp_cache_check_mobile' );
 
 		wpsc_register_post_hooks();
 

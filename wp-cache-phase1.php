@@ -177,10 +177,10 @@ if ( $cache_compression ) {
 }
 
 // The wp_cache_check_mobile function appends "-mobile" to the cache filename if it detects a mobile visitor.
-add_cacheaction( 'supercache_filename_str', 'wp_cache_check_mobile' );
-if ( function_exists( 'add_filter' ) ) { // loaded since WordPress 4.6
-	add_filter( 'supercache_filename_str', 'wp_cache_check_mobile' );
-}
+// Since WordPress 4.6, plugin.php (add_filter/apply_filters) is loaded before advanced-cache.php,
+// so add_filter is always available here. The duplicate add_filter in wp_cache_phase2_init() (phase2 line 1569)
+// is also removed to prevent the callback firing twice via apply_filters.
+add_filter( 'supercache_filename_str', 'wp_cache_check_mobile' );
 
 if ( defined( 'DOING_CRON' ) ) {
 	// this is required for scheduled CRON jobs.
