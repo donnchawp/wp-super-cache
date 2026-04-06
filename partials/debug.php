@@ -27,6 +27,7 @@ echo '<form name="wpsc_delete" action="' . esc_url_raw( add_query_arg( 'tab', 'd
 wp_nonce_field('wp-cache');
 echo "<input type='hidden' name='wpsc_delete_log' value='1' />";
 submit_button( __( 'Delete', 'wp-super-cache' ), 'delete', 'wpsc_delete_log_form', false );
+echo '<p class="description">' . __( 'Deleting the log will generate a new log URL. Any previously shared or bookmarked log viewer links will stop working.', 'wp-super-cache' ) . '</p>';
 echo "</form>";
 
 echo '<form name="wpsc_delete" action="' . esc_url_raw( add_query_arg( 'tab', 'debug', $admin_url ) ) . '" method="post">';
