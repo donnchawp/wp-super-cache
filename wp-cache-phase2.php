@@ -1267,7 +1267,7 @@ $start_log = 1 + array_search( "<" . "?php // END HEADER ?" . ">" . PHP_EOL, $de
 if ( $start_log > 1 ) {
 	$debug_log = array_slice( $debug_log, $start_log );
 }
-?' . '><form action="" method="GET"><' . '?php
+?' . '><form action="" method="GET"><input type="hidden" name="auth" value="' . $wp_cache_debug_username . '" /><' . '?php
 
 $checks = array( "wp-admin", "exclude_filter", "wp-content", "wp-json" );
 foreach( $checks as $check ) {
