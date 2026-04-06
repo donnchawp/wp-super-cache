@@ -33,7 +33,7 @@ if ( ! $is_nginx && $cache_enabled && ! $wp_cache_mod_rewrite ) {
 	}
 }
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo '<div class="submit"><input class="button-primary" type="submit" ' . SUBMITDISABLED . ' value="' . esc_html__( 'Update Status', 'wp-super-cache' ) . '" />';
+submit_button( esc_html__( 'Update Status', 'wp-super-cache' ) );
 if ( wpsc_is_boost_current() ) {
 	$config       = wpsc_get_boost_migration_config();
 	$button_url   = $config['is_installed'] ? $config['activate_url'] : $config['install_url'];
@@ -52,11 +52,11 @@ if ( wpsc_is_boost_current() ) {
 	echo '</a>';
 }
 
-echo '</div></form>';
+echo '</form>';
 echo '</div>';
 if ( $cache_enabled ) {
 	echo '<div class="wpsc-card">';
-	echo '<h4>' . esc_html__( 'Cache Tester', 'wp-super-cache' ) . '</h4>';
+	echo '<h2>' . esc_html__( 'Cache Tester', 'wp-super-cache' ) . '</h2>';
 	echo '<p>' . esc_html__( 'Test your cached website by clicking the test button below.', 'wp-super-cache' ) . '</p>';
 	echo '<p>' . __( 'Note: if you use Cloudflare or other transparent front-end proxy service this test may fail.<ol><li> If you have Cloudflare minification enabled this plugin may detect differences in the pages and report an error.</li><li> Try using the development mode of Cloudflare to perform the test. You can disable development mode afterwards if the test succeeds.</li></ol>', 'wp-super-cache' ) . '</p>';
 	if ( array_key_exists( 'action', $_POST ) && 'test' === $_POST['action'] && $valid_nonce ) {
@@ -75,11 +75,11 @@ if ( $cache_enabled ) {
 				$fp = fopen( $cache_path . $c . '.html', 'w' );
 				fwrite( $fp, $page[ $c ]['body'] );
 				fclose( $fp );
-				echo '<span style="color: #0a0; font-weight: bold;">' . esc_html__( 'OK', 'wp-super-cache' ) . "</span> (<a href='" . esc_url_raw( WP_CONTENT_URL . '/cache/' . $c . '.html' ) . "'>" . $c . '.html</a>)</p>';
+				echo '<strong class="wpsc-test-ok">' . esc_html__( 'OK', 'wp-super-cache' ) . "</strong> (<a href='" . esc_url_raw( WP_CONTENT_URL . '/cache/' . $c . '.html' ) . "'>" . $c . '.html</a>)</p>';
 				sleep( 1 );
 			} else {
 				$cache_test_error = true;
-				echo '<span style="color: #a00; font-weight: bold;">' . esc_html__( 'FAILED', 'wp-super-cache' ) . '</span></p>';
+				echo '<strong class="wpsc-test-fail">' . esc_html__( 'FAILED', 'wp-super-cache' ) . '</strong></p>';
 				$errors   = '';
 				$messages = '';
 				foreach ( $page[ $c ]->get_error_codes() as $code ) {
@@ -105,7 +105,7 @@ if ( $cache_enabled ) {
 		) {
 			echo '<p>' . sprintf( esc_html__( 'Page 1: %s', 'wp-super-cache' ), $matches1[2] ) . '</p>';
 			echo '<p>' . sprintf( esc_html__( 'Page 2: %s', 'wp-super-cache' ), $matches2[2] ) . '</p>';
-			echo '<p><span style="color: #0a0; font-weight: bold;">' . esc_html__( 'The timestamps on both pages match!', 'wp-super-cache' ) . '</span></p>';
+			echo '<p><strong class="wpsc-test-ok">' . esc_html__( 'The timestamps on both pages match!', 'wp-super-cache' ) . '</strong></p>';
 		} else {
 			echo '<p><strong>' . esc_html__( 'The pages do not match! Timestamps differ or were not found!', 'wp-super-cache' ) . '</strong></p>';
 			echo '<p>' . esc_html__( 'Things you can do:', 'wp-super-cache' ) . '</p>';
@@ -123,7 +123,7 @@ if ( $cache_enabled ) {
 
 	if ( isset( $wp_super_cache_comments ) && $wp_super_cache_comments == 0 ) {
 		echo '<p>' . __( '<strong>Warning!</strong> Cache comments are currently disabled. Please go to the Debug page and enable Cache Status Messages there. You should clear the cache before testing.', 'wp-super-cache' ) . '</p>';
-		echo '<div class="submit"><input disabled style="color: #aaa" class="button-secondary" type="submit" name="test" value="' . esc_html__( 'Test Cache', 'wp-super-cache' ) . '" /></div>';
+		echo '<div class="submit"><input disabled class="button-secondary" type="submit" name="test" value="' . esc_html__( 'Test Cache', 'wp-super-cache' ) . '" /></div>';
 	} else {
 		echo '<div class="submit"><input class="button-secondary" type="submit" name="test" value="' . __( 'Test Cache', 'wp-super-cache' ) . '" /></div>';
 	}
@@ -133,11 +133,11 @@ if ( $cache_enabled ) {
 	echo '</div>';
 }
 echo '<div class="wpsc-card">';
-echo '<h4>' . esc_html__( 'Delete Cached Pages', 'wp-super-cache' ) . '</h4>';
+echo '<h2>' . esc_html__( 'Delete Cached Pages', 'wp-super-cache' ) . '</h2>';
 echo '<p>' . esc_html__( 'Cached pages are stored on your server as html and PHP files. If you need to delete them, use the button below.', 'wp-super-cache' ) . '</p>';
 echo '<form name="wp_cache_content_delete" action="' . esc_url_raw( add_query_arg( 'tab', 'contents', $admin_url ) ) . '" method="post">';
 echo '<input type="hidden" name="wp_delete_cache" />';
-echo '<div class="submit"><input id="deletepost" class="button-secondary" type="submit" ' . SUBMITDISABLED . 'value="' . esc_html__( 'Delete Cache', 'wp-super-cache' ) . ' " /></div>';
+submit_button( esc_html__( 'Delete Cache', 'wp-super-cache' ), 'secondary', 'deletepost' );
 wp_nonce_field( 'wp-cache' );
 echo "</form>\n";
 echo '</div>';
@@ -146,17 +146,17 @@ if ( is_multisite() && wpsupercache_site_admin() ) {
 	echo '<div class="wpsc-card">';
 	echo '<form name="wp_cache_content_delete" action="' . esc_url_raw( add_query_arg( 'tab', 'contents', $admin_url ) . '#listfiles' ) . '" method="post">';
 	echo '<input type="hidden" name="wp_delete_all_cache" />';
-	echo '<div class="submit"><input id="deleteallpost" class="button-secondary" type="submit" ' . SUBMITDISABLED . 'value="' . esc_html__( 'Delete Cache On All Blogs', 'wp-super-cache' ) . '" /></div>';
+	submit_button( esc_html__( 'Delete Cache On All Blogs', 'wp-super-cache' ), 'secondary', 'deleteallpost' );
 	wp_nonce_field( 'wp-cache' );
 	echo "</form><br />\n";
 	echo '</div>';
 }
 ?>
 <div class="wpsc-card">
-<h4 class="clear"><?php esc_html_e( 'Recommended Links and Plugins', 'wp-super-cache' ); ?></h4>
+<h2><?php esc_html_e( 'Recommended Links and Plugins', 'wp-super-cache' ); ?></h2>
 <p><?php esc_html_e( 'Caching is only one part of making a website faster. Here are some other plugins that will help:', 'wp-super-cache' ); ?></p>
 
-<ul style="list-style: square; margin-left: 2em;">
+<ul class="ul-disc">
 	<li>
 		<?php
 			echo \wp_kses(

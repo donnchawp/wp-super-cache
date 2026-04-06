@@ -189,6 +189,19 @@
 	}
 }
 
+.wpsc-test-ok {
+	color: #00a32a;
+}
+
+.wpsc-test-fail {
+	color: #d63638;
+}
+
+.ul-disc {
+	list-style: disc;
+	margin-left: 2em;
+}
+
 .wpsc-code-block {
 	overflow: auto;
 	max-width: 100%;

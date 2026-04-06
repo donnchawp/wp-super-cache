@@ -3,9 +3,7 @@
 extract( wpsc_update_debug_settings() ); // $wp_super_cache_debug, $wp_cache_debug_log, $wp_cache_debug_ip, $wp_super_cache_comments, $wp_super_cache_front_page_check, $wp_super_cache_front_page_clear, $wp_super_cache_front_page_text, $wp_super_cache_front_page_notification, $wp_super_cache_advanced_debug, $wp_cache_debug_username
 $admin_url = admin_url( 'options-general.php?page=wpsupercache' );
 
-echo '<a name="debug"></a>';
-echo '<fieldset class="options">';
-echo '<div class="wpsc-card">';
+echo '<div class="wpsc-card" id="debug">';
 echo '<p>' . __( 'Fix problems with the plugin by debugging it here. It will log to a file in your cache directory.', 'wp-super-cache' ) . '</p>';
 // $wp_cache_debug_log is declared when this file is included.
 // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
@@ -56,7 +54,7 @@ echo "<pre>&lt;!-- Dynamic page generated in 0.450 seconds. -->
 	&lt;!-- super cache --></pre></td></tr>";
 echo "</table>\n";
 if ( isset( $wp_super_cache_advanced_debug ) ) {
-	echo "<h5>" . __( 'Advanced', 'wp-super-cache' ) . "</h5><p>" . __( 'In very rare cases two problems may arise on some blogs:<ol><li> The front page may start downloading as a zip file.</li><li> The wrong page is occasionally cached as the front page if your blog uses a static front page and the permalink structure is <em>/%category%/%postname%/</em>.</li></ol>', 'wp-super-cache' ) . '</p>';
+	echo "<h3>" . __( 'Advanced', 'wp-super-cache' ) . "</h3><p>" . __( 'In very rare cases two problems may arise on some blogs:<ol><li> The front page may start downloading as a zip file.</li><li> The wrong page is occasionally cached as the front page if your blog uses a static front page and the permalink structure is <em>/%category%/%postname%/</em>.</li></ol>', 'wp-super-cache' ) . '</p>';
 	echo "<p>" . __( 'I&#8217;m 99% certain that they aren&#8217;t bugs in WP Super Cache and they only happen in very rare cases but you can run a simple check once every 5 minutes to verify that your site is ok if you&#8217;re worried. You will be emailed if there is a problem.', 'wp-super-cache' ) . "</p>";
 	echo "<table class='form-table'>";
 	echo "<tr><td valign='top' colspan='2'><input type='checkbox' name='wp_super_cache_front_page_check' value='1' " . checked( 1, $wp_super_cache_front_page_check, false ) . " /> " . __( 'Check front page every 5 minutes.', 'wp-super-cache' ) . "</td></tr>";
@@ -66,9 +64,8 @@ if ( isset( $wp_super_cache_advanced_debug ) ) {
 
 	echo "</table>\n";
 }
-echo '<div class="submit"><input class="button-primary" type="submit" ' . SUBMITDISABLED . 'value="' . __( 'Save Settings', 'wp-super-cache' ) . '" /></div>';
+submit_button( __( 'Save Settings', 'wp-super-cache' ) );
 wp_nonce_field('wp-cache');
 echo "</form>\n";
 echo '</div>';
-echo '</fieldset>';
 echo '</div>';
