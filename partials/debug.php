@@ -15,19 +15,19 @@ if ( ! isset( $wp_cache_debug_log ) || $wp_cache_debug_log == '' ) {
 
 // $cache_path and $wp_cache_debug_log is declared when this file is included.
 // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
-$log_file_link = "<a href='" . home_url( str_replace( get_home_path(), '', "{$cache_path}view_{$wp_cache_debug_log}?wp-admin=1&wp-json=1&filter=" ) ) . "'>$wp_cache_debug_log</a>";
+$log_file_link = "<a href='" . home_url( str_replace( get_home_path(), '', "{$cache_path}view_{$wp_cache_debug_log}?auth={$wp_cache_debug_username}&wp-admin=1&wp-json=1&filter=" ) ) . "'>$wp_cache_debug_log</a>";
 
 if ( $wp_super_cache_debug == 1 ) {
 	echo "<p>" . sprintf( __( 'Currently logging to: %s', 'wp-super-cache' ), $log_file_link ) . "</p>";
 } else {
 	echo "<p>" . sprintf( __( 'Last Logged to: %s', 'wp-super-cache' ), $log_file_link ) . "</p>";
 }
-echo "<p>" . sprintf( __( 'Username/Password: %s', 'wp-super-cache' ), $wp_cache_debug_username ) . "</p>";
 
 echo '<form name="wpsc_delete" action="' . esc_url_raw( add_query_arg( 'tab', 'debug', $admin_url ) ) . '" method="post">';
 wp_nonce_field('wp-cache');
 echo "<input type='hidden' name='wpsc_delete_log' value='1' />";
 submit_button( __( 'Delete', 'wp-super-cache' ), 'delete', 'wpsc_delete_log_form', false );
+echo '<p class="description">' . __( 'Deleting the log will generate a new log URL. Any previously shared or bookmarked log viewer links will stop working.', 'wp-super-cache' ) . '</p>';
 echo "</form>";
 
 echo '<form name="wpsc_delete" action="' . esc_url_raw( add_query_arg( 'tab', 'debug', $admin_url ) ) . '" method="post">';

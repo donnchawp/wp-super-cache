@@ -1253,22 +1253,21 @@ function wpsc_create_debug_log( $filename = '', $username = '' ) {
 	}
 
 	$msg = '
-if ( !isset( $_SERVER[ "PHP_AUTH_USER" ] ) || ( $_SERVER[ "PHP_AUTH_USER" ] != "' . $wp_cache_debug_username . '" && $_SERVER[ "PHP_AUTH_PW" ] != "' . $wp_cache_debug_username . '" ) ) {
-	header( "WWW-Authenticate: Basic realm=\"WP-Super-Cache Debug Log\"" );
-	header( $_SERVER[ "SERVER_PROTOCOL" ] . " 401 Unauthorized" );
-	echo "You must login to view the debug log";
+if ( ! isset( $_GET["auth"] ) || $_GET["auth"] !== "' . $wp_cache_debug_username . '" ) {
+	header( ( $_SERVER["SERVER_PROTOCOL"] ?? "HTTP/1.1" ) . " 403 Forbidden" );
+	echo "Forbidden";
 	exit( 0 );
 }' . PHP_EOL;
 
 	$fp = fopen( $cache_path . 'view_' . $wp_cache_debug_log, 'w' );
 	if ( $fp ) {
 		fwrite( $fp, '<' . '?php' . PHP_EOL );
-		$msg .= '$debug_log = file( "./' . $wp_cache_debug_log . '" );
+		$msg .= '$debug_log = file( __DIR__ . "/' . $wp_cache_debug_log . '" );
 $start_log = 1 + array_search( "<" . "?php // END HEADER ?" . ">" . PHP_EOL, $debug_log );
 if ( $start_log > 1 ) {
 	$debug_log = array_slice( $debug_log, $start_log );
 }
-?' . '><form action="" method="GET"><' . '?php
+?' . '><form action="" method="GET"><input type="hidden" name="auth" value="' . $wp_cache_debug_username . '" /><' . '?php
 
 $checks = array( "wp-admin", "exclude_filter", "wp-content", "wp-json" );
 foreach( $checks as $check ) {
