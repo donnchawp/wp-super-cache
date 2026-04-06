@@ -188,3 +188,13 @@
 		color: var(--jp-white);
 	}
 }
+
+.wpsc-code-block {
+	overflow: auto;
+	max-width: 100%;
+	max-height: 400px;
+	padding: 8px;
+	background: #f0f0f1;
+	border: 1px solid #c3c4c7;
+	font-family: monospace;
+}
