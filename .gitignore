@@ -1,0 +1,18 @@
+# PHPUnit
+.phpunit.result.cache
+
+# Dev dependencies (installed via composer install, not shipped)
+vendor/bin/
+vendor/automattic/
+vendor/myclabs/
+vendor/nikic/
+vendor/phar-io/
+vendor/phpunit/
+vendor/psr/
+vendor/sebastian/
+vendor/staabm/
+vendor/symfony/
+vendor/theseer/
+vendor/yoast/
+vendor/composer/autoload_files.php
+vendor/composer/tmp-*
