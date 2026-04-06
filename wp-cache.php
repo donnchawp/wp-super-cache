@@ -1807,7 +1807,8 @@ function wpsc_update_debug_settings() {
 
 	if ( isset( $_POST[ 'wpsc_delete_log' ] ) && $_POST[ 'wpsc_delete_log' ] == 1 && $wp_cache_debug_log != '' ) {
 		@unlink( $cache_path . $wp_cache_debug_log );
-		extract( wpsc_create_debug_log( $wp_cache_debug_log, $wp_cache_debug_username ) ); // $wp_cache_debug_log, $wp_cache_debug_username
+		@unlink( $cache_path . 'view_' . $wp_cache_debug_log );
+		extract( wpsc_create_debug_log() ); // $wp_cache_debug_log, $wp_cache_debug_username — fresh log name and auth key
 	}
 
 	if ( ! isset( $wp_cache_debug_log ) || $wp_cache_debug_log == '' ) {
